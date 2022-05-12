@@ -16,18 +16,20 @@ class NetworkException implements Exception {
 }
 
 class Request {
-
-  static final _token = LocalStorage.getToken();
-  static final Map<String, String> _headers = {
-    "Authorization": "Bearer $_token"
-  };
-
   static http.Client client = http.Client();
+
+  static Map<String, String> getTokenHeaders() {
+    var token = LocalStorage.getToken();
+    Map<String, String> headers = {
+      "Authorization": "Bearer $token"
+    };
+    return headers;
+  }
 
   static Future<http.Response> httpGet(
       String url, Map<String, dynamic>? body) async {
     if (body == null) {
-      return await client.get(Uri.parse(url), headers: _headers);
+      return await client.get(Uri.parse(url), headers: getTokenHeaders());
     } else {
       var paramString = '?';
       body.forEach((k, v) {
@@ -38,6 +40,7 @@ class Request {
       try {
         var result = await client.get(
           Uri.parse(url + paramString.substring(0, paramString.length - 1)),
+          headers: getTokenHeaders()
         );
         return result;
       } catch (_) {
@@ -50,7 +53,7 @@ class Request {
       String url, Map<String, dynamic>? body) async {
     if (body == null) {
       try {
-        var result = await client.post(Uri.parse(url), headers: _headers);
+        var result = await client.post(Uri.parse(url), headers: getTokenHeaders());
         return result;
       } catch (_) {
         throw NetworkException();
@@ -75,7 +78,7 @@ class Request {
       String url, Map<String, dynamic>? body, File file) async {
     try {
       var request = http.MultipartRequest("POST", Uri.parse(url));
-      request.headers['Authorization'] = "Bearer $_token";
+      request.headers['Authorization'] = "Bearer ${LocalStorage.getToken()}";
       if (body != null) {
         body.forEach((k, v) {
           if (v != null) {
