@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nine_song/models/song_model.dart';
-import 'package:nine_song/tab/widgets/playlist_row_item.dart';
+import 'package:nine_song/pages/widgets/playlist_row_item.dart';
 
 import 'package:nine_song/api/backend_service.dart';
 import '../models/playlist_model.dart';
@@ -18,8 +18,7 @@ class _PlaylistTabState extends State<PlaylistTab> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _getAllPlaylist(),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<Playlist>> snapshot) {
         if (!snapshot.hasData) {
           return Center(
             child: Column(
@@ -78,13 +77,15 @@ Future<List<Playlist>> _getAllPlaylist() async {
     } else {
       curSong = null;
     }
+    List<SongModel> songs = await BackendService.getSongsByPlaylistId(p.id);
     if (owner != null && curSong != null) {
       var playlist = Playlist(
           ownerName: owner.nickName,
           curSongName: curSong.name,
           id: p.id,
           ownerId: p.ownerId,
-          name: p.name);
+          name: p.name,
+          songs: songs);
       playlists.add(playlist);
     }
   }

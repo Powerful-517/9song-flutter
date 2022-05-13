@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:nine_song/utils/init.dart';
 import 'package:nine_song/utils/local_storage.dart';
 import 'package:nine_song/pages/login_page.dart';
-import 'package:nine_song/tab/music_tab.dart';
-import 'package:nine_song/tab/playlist_tab.dart';
-import 'package:nine_song/tab/setting_tab.dart';
+import 'package:nine_song/pages/music_tab.dart';
+import 'package:nine_song/pages/playlist_tab.dart';
+import 'package:nine_song/pages/setting_tab.dart';
 
 class NineSongApp extends StatefulWidget {
   const NineSongApp({Key? key}) : super(key: key);

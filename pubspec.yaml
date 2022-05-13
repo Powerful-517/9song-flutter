@@ -35,10 +35,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^0.13.4
-  get: ^4.6.1
+  get: ^4.6.2
   hive: ^2.1.0
   hive_flutter: ^1.1.0
   json_annotation: ^4.4.0
+  just_audio: ^0.9.21
 
 dev_dependencies:
   flutter_test:

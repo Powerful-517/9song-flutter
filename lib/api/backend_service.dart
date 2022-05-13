@@ -39,15 +39,14 @@ class BackendService {
       var resultList = json.decode(
         utf8decoder.convert(response.bodyBytes),
       ) as List;
-      List<PlaylistModel> playlists = resultList
-          .map((data) => PlaylistModel.fromJson(data))
-          .toList();
+      List<PlaylistModel> playlists =
+          resultList.map((data) => PlaylistModel.fromJson(data)).toList();
       return playlists;
     });
   }
 
   static Future<UserModel?> getUserById(int id) async {
-    return Request.httpGet(serverUrl + '/users/$id/', null)
+    return Request.httpGet(serverUrl + '/users/$id', null)
         .then((response) async {
       if (response.statusCode != 200) return null;
       var resultMap = json.decode(
@@ -67,6 +66,26 @@ class BackendService {
       );
       SongModel song = SongModel.fromJson(resultMap);
       return song;
+    });
+  }
+
+  static Future<List<SongModel>> getSongsByPlaylistId(int id) async {
+    return Request.httpGet(serverUrl + '/songs/playlist_id/$id', null)
+        .then((response) async {
+      if (response.statusCode != 200) return [];
+      var resultList = json.decode(
+        utf8decoder.convert(response.bodyBytes),
+      ) as List;
+      List<SongModel> songs =
+          resultList.map((data) => SongModel.fromJson(data)).toList();
+      return songs;
+    });
+  }
+
+  static Future<String> getSongUrl(String songFileName) async {
+    return Request.httpGet(serverUrl + '/songs/download_url/$songFileName', null).then((response) {
+      if (response.statusCode != 200) return "";
+      return jsonDecode(utf8decoder.convert(response.bodyBytes))['download_url'];
     });
   }
 }

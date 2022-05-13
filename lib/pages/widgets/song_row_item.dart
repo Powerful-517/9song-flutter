@@ -1,22 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:nine_song/models/playlist_model.dart';
+import 'package:nine_song/models/song_model.dart';
+import 'package:nine_song/pages/music_tab.dart';
 
-class PlaylistRowItem extends StatelessWidget {
-  const PlaylistRowItem(
-      {required this.playlist, required this.lastItem, Key? key})
+class SongRowItem extends StatelessWidget {
+  const SongRowItem(
+      {required this.song, required this.lastItem, Key? key})
       : super(key: key);
 
-  final Playlist playlist;
+  final SongModel song;
   final bool lastItem;
 
   @override
   Widget build(BuildContext context) {
     final row = GestureDetector(
       onTap: () {
-        // TODO
-        print(playlist.name + " Tapped!");
+        print(song.name + " Tapped!");
+        MusicTabState.play(song.fileName, null);
       },
       child: SafeArea(
         top: false,
@@ -32,12 +33,12 @@ class PlaylistRowItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              playlist.name,
+              song.name,
               style: const TextStyle(color: Colors.black, fontSize: 18),
             ),
             const Padding(padding: EdgeInsets.only(top: 8)),
             Text(
-              playlist.curSongName,
+              song.artist,
               style: const TextStyle(color: Colors.grey, fontSize: 14),
             ),
           ],

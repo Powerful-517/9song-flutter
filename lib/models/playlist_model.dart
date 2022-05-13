@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:nine_song/models/song_model.dart';
 
 part 'playlist_model.g.dart';
 
@@ -32,6 +33,7 @@ class Playlist extends PlaylistModel {
   Playlist(
       {required this.ownerName,
       required this.curSongName,
+      required this.songs,
       required int id,
       required int ownerId,
       required String name})
@@ -39,4 +41,5 @@ class Playlist extends PlaylistModel {
 
   final String ownerName;
   final String curSongName;
+  final List<SongModel> songs;
 }
